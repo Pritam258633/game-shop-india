@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Mela Store</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; }
+    header { background-color: #1a1a2e; color: white; text-align: center; padding: 1em; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    .game-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .game-card { background-color: white; border-radius: 8px; padding: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .game-card img { max-width: 100%; border-radius: 5px; }
+    .game-card button { background-color: #e94560; color: white; border: none; padding: 10px; cursor: pointer; border-radius: 5px; }
+    .game-card button:hover { background-color: #d32f2f; }
+    .payment-section { background-color: white; border-radius: 8px; padding: 20px; margin-top: 40px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
+    .payment-section h2 { margin-top: 0; color: #1a1a2e; }
+    .upi-info { margin-top: 10px; font-size: 16px; }
+    .qr-code { margin-top: 20px; max-width: 200px; border: 1px solid #ddd; border-radius: 8px; }
+    .whatsapp-link { display: inline-block; margin-top: 15px; padding: 10px 15px; background-color: #25D366; color: white; text-decoration: none; border-radius: 5px; }
+    .whatsapp-link:hover { background-color: #1da851; }
+    #cart-box { margin-top: 40px; padding: 20px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    #cart-box ul { list-style: none; padding: 0; }
+    #cart-box li { padding: 5px 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Game Mela Store</h1>
+    <p>Your one-stop shop for gaming deals!</p>
+  </header>
+
+  <div class="container">
+    <h2>Featured Games</h2>
+    <div class="game-grid" id="game-list"></div>
+
+    <div class="payment-section">
+      <h2>Payment Method</h2>
+      <p class="upi-info"><strong>UPI ID:</strong> isami@upi</p>
+      <p class="upi-info"><strong>Note:</strong> Scan the QR code below using any UPI app.</p>
+      <img class="qr-code" src="upi.jpg" alt="ISAMI UPI QR Code">
+      <p class="upi-info"><em>After payment, send the screenshot and your game name to our WhatsApp support.</em></p>
+      <a class="whatsapp-link" href="https://wa.me/918287153080" target="_blank">📞 Contact on WhatsApp</a>
+    </div>
+
+    <div id="cart-box"></div>
+  </div>
+
+  <script>
+    const games = [
+      { name: "Cyberpunk", price: 299, image: "images/cyberpunk.jpg" },
+{ name: "FIFA 23", price: 301, image: "images/fifa23.jpg" },
+{ name: "GTA V", price: 99, image: "images/gta.jpg" },
+
+    { name: "Game 4", price: 104, img: "https://via.placeholder.com/200x300?text=Game+4" },
+    { name: "Game 5", price: 105, img: "https://via.placeholder.com/200x300?text=Game+5" },
+    { name: "Game 6", price: 106, img: "https://via.placeholder.com/200x300?text=Game+6" },
+    { name: "Game 7", price: 107, img: "https://via.placeholder.com/200x300?text=Game+7" },
+    { name: "Game 8", price: 108, img: "https://via.placeholder.com/200x300?text=Game+8" },
+    { name: "Game 9", price: 109, img: "https://via.placeholder.com/200x300?text=Game+9" },
+    { name: "Game 10", price: 110, img: "https://via.placeholder.com/200x300?text=Game+10" },
+    { name: "Game 11", price: 111, img: "https://via.placeholder.com/200x300?text=Game+11" },
+    { name: "Game 12", price: 112, img: "https://via.placeholder.com/200x300?text=Game+12" },
+    { name: "Game 13", price: 113, img: "https://via.placeholder.com/200x300?text=Game+13" },
+    { name: "Game 14", price: 114, img: "https://via.placeholder.com/200x300?text=Game+14" },
+    { name: "Game 15", price: 115, img: "https://via.placeholder.com/200x300?text=Game+15" },
+    { name: "Game 16", price: 116, img: "https://via.placeholder.com/200x300?text=Game+16" },
+    { name: "Game 17", price: 117, img: "https://via.placeholder.com/200x300?text=Game+17" },
+    { name: "Game 18", price: 118, img: "https://via.placeholder.com/200x300?text=Game+18" },
+    { name: "Game 19", price: 119, img: "https://via.placeholder.com/200x300?text=Game+19" },
+    { name: "Game 20", price: 120, img: "https://via.placeholder.com/200x300?text=Game+20" },
+    { name: "Game 21", price: 121, img: "https://via.placeholder.com/200x300?text=Game+21" },
+    { name: "Game 22", price: 122, img: "https://via.placeholder.com/200x300?text=Game+22" },
+    { name: "Game 23", price: 123, img: "https://via.placeholder.com/200x300?text=Game+23" },
+    { name: "Game 24", price: 124, img: "https://via.placeholder.com/200x300?text=Game+24" },
+    { name: "Game 25", price: 125, img: "https://via.placeholder.com/200x300?text=Game+25" },
+    { name: "Game 26", price: 126, img: "https://via.placeholder.com/200x300?text=Game+26" },
+    { name: "Game 27", price: 127, img: "https://via.placeholder.com/200x300?text=Game+27" },
+    { name: "Game 28", price: 128, img: "https://via.placeholder.com/200x300?text=Game+28" },
+    { name: "Game 29", price: 129, img: "https://via.placeholder.com/200x300?text=Game+29" },
+    { name: "Game 30", price: 130, img: "https://via.placeholder.com/200x300?text=Game+30" },
+    { name: "Game 31", price: 131, img: "https://via.placeholder.com/200x300?text=Game+31" },
+    { name: "Game 32", price: 132, img: "https://via.placeholder.com/200x300?text=Game+32" },
+    { name: "Game 33", price: 133, img: "https://via.placeholder.com/200x300?text=Game+33" },
+    { name: "Game 34", price: 134, img: "https://via.placeholder.com/200x300?text=Game+34" },
+    { name: "Game 35", price: 135, img: "https://via.placeholder.com/200x300?text=Game+35" },
+    { name: "Game 36", price: 136, img: "https://via.placeholder.com/200x300?text=Game+36" },
+    { name: "Game 37", price: 137, img: "https://via.placeholder.com/200x300?text=Game+37" },
+    { name: "Game 38", price: 138, img: "https://via.placeholder.com/200x300?text=Game+38" },
+    { name: "Game 39", price: 139, img: "https://via.placeholder.com/200x300?text=Game+39" },
+    { name: "Game 40", price: 140, img: "https://via.placeholder.com/200x300?text=Game+40" },
+    { name: "Game 41", price: 141, img: "https://via.placeholder.com/200x300?text=Game+41" },
+    { name: "Game 42", price: 142, img: "https://via.placeholder.com/200x300?text=Game+42" },
+    { name: "Game 43", price: 143, img: "https://via.placeholder.com/200x300?text=Game+43" },
+    { name: "Game 44", price: 144, img: "https://via.placeholder.com/200x300?text=Game+44" },
+    { name: "Game 45", price: 145, img: "https://via.placeholder.com/200x300?text=Game+45" },
+    { name: "Game 46", price: 146, img: "https://via.placeholder.com/200x300?text=Game+46" },
+    { name: "Game 47", price: 147, img: "https://via.placeholder.com/200x300?text=Game+47" },
+    { name: "Game 48", price: 148, img: "https://via.placeholder.com/200x300?text=Game+48" },
+    { name: "Game 49", price: 149, img: "https://via.placeholder.com/200x300?text=Game+49" },
+    { name: "Game 50", price: 150, img: "https://via.placeholder.com/200x300?text=Game+50" },
+    { name: "Game 51", price: 151, img: "https://via.placeholder.com/200x300?text=Game+51" },
+    { name: "Game 52", price: 152, img: "https://via.placeholder.com/200x300?text=Game+52" },
+    { name: "Game 53", price: 153, img: "https://via.placeholder.com/200x300?text=Game+53" }
+    ];
+
+    const gameList = document.getElementById("game-list");
+    const cart = [];
+    let totalAmount = 0;
+
+    const updateCart = () => {
+      const cartBox = document.getElementById("cart-box");
+      cartBox.innerHTML = `
+        <h3>🛒 Cart Summary</h3>
+        <ul>
+          ${cart.map(item => `<li>${item.name} - ₹${item.price}</li>`).join("")}
+        </ul>
+        <p><strong>Total: ₹${totalAmount}</strong></p>
+        <a class="whatsapp-link" href="https://wa.me/918287153080?text=${encodeURIComponent('I want to buy these games:\n' + cart.map(g => `${g.name} - ₹${g.price}`).join('\n') + `\nTotal: ₹${totalAmount}`)}" target="_blank">📞 Order on WhatsApp</a>
+      `;
+    };
+
+    games.forEach(game => {
+      const gameCard = document.createElement("div");
+      gameCard.className = "game-card";
+      gameCard.innerHTML = `
+        <img src="${game.img}" alt="${game.name}">
+        <h3>${game.name}</h3>
+        <p>₹${game.price}</p>
+        <button>Add to Cart</button>
+      `;
+
+      const button = gameCard.querySelector("button");
+      button.addEventListener("click", () => {
+        cart.push(game);
+        totalAmount += game.price;
+        updateCart();
+      });
+
+      gameList.appendChild(gameCard);
+    });
+  </script>
+</body>
+</html>
